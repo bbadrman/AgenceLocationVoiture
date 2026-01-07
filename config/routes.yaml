@@ -1,0 +1,10 @@
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+
+# Ne PAS ajouter de préfixe /api ici car il est déjà dans les attributs Route des controllers
+api_controllers:
+    resource: ../src/Controller/Api/
+    type: attribute
