@@ -55,3 +55,26 @@ export const useCar = (carId, searchParams = {}) => {
 
   return { car, loading, error, fetchCar };
 };
+
+export const useAllCars = () => {
+  const [cars, setCars] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchCars = async () => {
+      try {
+        setLoading(true);
+        const response = await carsAPI.getAll();
+        setCars(response.data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCars();
+  }, []);
+
+  return { cars, loading, error };
+};

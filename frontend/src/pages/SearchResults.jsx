@@ -33,52 +33,58 @@ const SearchResults = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-100 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header avec formulaire de recherche */}
-        <div className="mb-8">
+
+        {/* Header Section */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">Résultats de recherche</h1>
+            {searchInfo && (
+              <p className="text-gray-600 mt-2 flex items-center gap-2">
+                <span className="font-medium text-primary-600 bg-primary-50 px-3 py-1 rounded-full text-sm">
+                  {searchInfo.total} voiture{searchInfo.total > 1 ? 's' : ''} disponible{searchInfo.total > 1 ? 's' : ''}
+                </span>
+                <span className="text-sm">
+                  Du {formatDate(searchInfo.period.startDate)} au {formatDate(searchInfo.period.endDate)}
+                </span>
+              </p>
+            )}
+          </div>
+
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="mb-4 flex items-center gap-2 text-primary-600 hover:text-primary-700 font-medium"
+            className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm font-medium"
           >
-            <ChevronDown className={`h-5 w-5 transition-transform ${showFilters ? 'rotate-180' : ''}`} />
+            <ChevronDown className={`h-5 w-5 transition-transform duration-200 ${showFilters ? 'rotate-180' : ''}`} />
             {showFilters ? 'Masquer' : 'Modifier'} la recherche
           </button>
+        </div>
 
-          {showFilters && (
+        {/* Search Form Panel */}
+        <div className={`transition-all duration-300 ease-in-out overflow-hidden ${showFilters ? 'max-h-[500px] opacity-100 mb-8' : 'max-h-0 opacity-0'}`}>
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
             <SearchForm
               onSearch={handleSearch}
               initialValues={params}
             />
-          )}
+          </div>
         </div>
 
-        {/* Informations de recherche */}
-        {searchInfo && (
-          <div className="bg-white rounded-lg shadow p-4 mb-6">
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <div>
-                <h2 className="text-2xl font-bold text-gray-900">
-                  {searchInfo.total} voiture{searchInfo.total > 1 ? 's' : ''} disponible{searchInfo.total > 1 ? 's' : ''}
-                </h2>
-                <p className="text-gray-600 mt-1">
-                  Du {formatDate(searchInfo.period.startDate)} au {formatDate(searchInfo.period.endDate)}
-                  {' '}({searchInfo.period.numberOfDays} jour{searchInfo.period.numberOfDays > 1 ? 's' : ''})
-                </p>
-              </div>
+        {/* Error Message */}
+        {error && (
+          <div className="bg-red-50 border border-red-200 text-red-800 rounded-xl p-4 mb-8 flex items-center gap-3">
+            <div className="bg-red-100 p-2 rounded-full">
+              <span className="text-xl">⚠️</span>
+            </div>
+            <div>
+              <p className="font-bold">Erreur lors de la recherche</p>
+              <p className="text-sm">{error}</p>
             </div>
           </div>
         )}
 
-        {/* Erreur */}
-        {error && (
-          <div className="bg-red-50 border border-red-200 text-red-800 rounded-lg p-4 mb-6">
-            <p className="font-semibold">Erreur lors de la recherche</p>
-            <p>{error}</p>
-          </div>
-        )}
-
-        {/* Liste des voitures */}
+        {/* Car List */}
         <CarList cars={cars} searchParams={params} loading={loading} />
       </div>
     </div>

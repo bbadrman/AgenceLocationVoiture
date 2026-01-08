@@ -7,7 +7,7 @@ import { formatDateForAPI } from '../../utils/date';
 
 const SearchForm = ({ onSearch, initialValues = {} }) => {
   const { cities, loading: citiesLoading } = useCities();
-  
+
   const [formData, setFormData] = useState({
     cityId: initialValues.cityId || '',
     pickupPointId: initialValues.pickupPointId || '',
@@ -31,7 +31,7 @@ const SearchForm = ({ onSearch, initialValues = {} }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (!formData.cityId || !formData.startDate || !formData.endDate) {
       alert('Veuillez remplir tous les champs obligatoires');
       return;
@@ -53,7 +53,7 @@ const SearchForm = ({ onSearch, initialValues = {} }) => {
 
   return (
     <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-lg p-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Ville */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -63,7 +63,7 @@ const SearchForm = ({ onSearch, initialValues = {} }) => {
             name="cityId"
             value={formData.cityId}
             onChange={handleChange}
-            className="input-field"
+            className="input-field w-full"
             required
             disabled={citiesLoading}
           >
@@ -85,7 +85,7 @@ const SearchForm = ({ onSearch, initialValues = {} }) => {
             name="pickupPointId"
             value={formData.pickupPointId}
             onChange={handleChange}
-            className="input-field"
+            className="input-field w-full"
             disabled={!formData.cityId || pickupLoading}
           >
             <option value="">Tous les lieux</option>
@@ -117,7 +117,7 @@ const SearchForm = ({ onSearch, initialValues = {} }) => {
               name="startTime"
               value={formData.startTime}
               onChange={handleChange}
-              className="input-field w-24"
+              className="input-field w-28"
               required
             />
           </div>
@@ -143,21 +143,21 @@ const SearchForm = ({ onSearch, initialValues = {} }) => {
               name="endTime"
               value={formData.endTime}
               onChange={handleChange}
-              className="input-field w-24"
+              className="input-field w-28"
               required
             />
           </div>
         </div>
 
         {/* Bouton de recherche */}
-        <div className="md:col-span-2 lg:col-span-1 flex items-end">
+        <div className="md:col-span-2 pt-2">
           <Button
             type="submit"
-            className="w-full flex items-center justify-center gap-2"
+            className="w-full flex items-center justify-center gap-2 py-3 text-lg"
             disabled={citiesLoading}
           >
-            <Search className="h-5 w-5" />
-            Rechercher
+            <Search className="h-6 w-6" />
+            Rechercher un véhicule
           </Button>
         </div>
       </div>

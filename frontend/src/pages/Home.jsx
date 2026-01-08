@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Calendar, MapPin, Car } from 'lucide-react';
 import SearchForm from '../components/Search/SearchForm';
+import CarCarousel from '../components/Car/CarCarousel';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -30,6 +31,21 @@ const Home = () => {
           <div className="max-w-4xl mx-auto">
             <SearchForm onSearch={handleSearch} />
           </div>
+        </div>
+      </div>
+
+      {/* Featured Cars Section */}
+      <div className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Nos véhicules populaires
+            </h2>
+            <p className="text-gray-600">
+              Découvrez notre sélection de voitures prêtes à partir
+            </p>
+          </div>
+          <CarCarousel />
         </div>
       </div>
 
@@ -78,6 +94,8 @@ const Home = () => {
           </div>
         </div>
       </div>
+
+
 
       {/* CTA Section */}
       <div className="bg-primary-600 text-white py-16">

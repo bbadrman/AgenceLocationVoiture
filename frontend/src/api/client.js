@@ -34,6 +34,7 @@ export const carsAPI = {
   checkAvailability: (id, params) => apiClient.get(`/cars/${id}/availability`, { params }),
   getBrands: () => apiClient.get('/cars/brands/list'),
   getFuelTypes: () => apiClient.get('/cars/fuel-types/list'),
+  getAll: () => apiClient.get('/cars'),
 };
 
 // API des réservations
