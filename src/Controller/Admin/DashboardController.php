@@ -26,7 +26,7 @@ class DashboardController extends AbstractDashboardController
     {
         // Rediriger vers la liste des réservations par défaut
         $url = $this->adminUrlGenerator
-            ->setController(BookingCrudController::class)
+            ->setController(CarCrudController::class)
             ->generateUrl();
 
         return $this->redirect($url);

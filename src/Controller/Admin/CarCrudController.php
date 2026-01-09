@@ -16,6 +16,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
+use App\Form\CarImageType;
 
 class CarCrudController extends AbstractCrudController
 {
@@ -85,10 +87,11 @@ class CarCrudController extends AbstractCrudController
         yield ImageField::new('mainImage', 'Image principale')
             ->setBasePath('uploads/cars')
             ->setUploadDir('public/uploads/cars')
-            ->setUploadedFileNamePattern('[slug]-[timestamp].[extension]')
+            ->setUploadedFileNamePattern('[uuid].[extension]')
             ->hideOnIndex();
         
-        yield ArrayField::new('images', 'Galerie d\'images')
+        yield CollectionField::new('carImages', 'Galerie d\'images')
+            ->setEntryType(CarImageType::class)
             ->hideOnIndex();
         
         yield BooleanField::new('isActive', 'Actif');

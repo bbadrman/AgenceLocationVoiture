@@ -66,9 +66,10 @@ class Car
     #[Groups(['car:read', 'car:write'])]
     private ?array $features = []; // ["GPS", "Climatisation", "Bluetooth"]
 
-    #[ORM\Column(type: Types::JSON, nullable: true)]
+
+    #[ORM\OneToMany(mappedBy: 'car', targetEntity: CarImage::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[Groups(['car:read', 'car:write'])]
-    private ?array $images = []; // ["image1.jpg", "image2.jpg"]
+    private Collection $carImages;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['car:read', 'car:write'])]
@@ -93,6 +94,7 @@ class Car
     public function __construct()
     {
         $this->bookings = new ArrayCollection();
+        $this->carImages = new ArrayCollection();
     }
 
     // Getters & Setters...
@@ -200,14 +202,33 @@ class Car
         return $this;
     }
 
-    public function getImages(): ?array
+    /**
+     * @return Collection<int, CarImage>
+     */
+    public function getCarImages(): Collection
     {
-        return $this->images;
+        return $this->carImages;
     }
 
-    public function setImages(?array $images): static
+    public function addCarImage(CarImage $carImage): static
     {
-        $this->images = $images;
+        if (!$this->carImages->contains($carImage)) {
+            $this->carImages->add($carImage);
+            $carImage->setCar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCarImage(CarImage $carImage): static
+    {
+        if ($this->carImages->removeElement($carImage)) {
+            // set the owning side to null (unless already changed)
+            if ($carImage->getCar() === $this) {
+                $carImage->setCar(null);
+            }
+        }
+
         return $this;
     }
 
